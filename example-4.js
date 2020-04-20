@@ -4,7 +4,7 @@ const companies = createAll();
 cleanConsole(4, companies);
 console.log('---- EXAMPLE 4 --- ', getAllUsersFromCompanies(companies));
 
-function getAllUsersFromCompanies(companies) {
+export function getAllUsersFromCompanies(companies) {
   const allUsers=[];
   for (let i = 0; i < companies.length; i++) {
     const company = companies[i];

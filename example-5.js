@@ -1,8 +1,33 @@
 import {cleanConsole, createAll} from './data';
+import {getAllUsersFromCompanies} from './example-4';
 const companies = createAll();
 
 cleanConsole(5, companies);
-console.log('---- EXAMPLE 5 --- ', 'Put here your function');
+console.log('---- EXAMPLE 5 --- ', getUserResume(companies));
+
+function getUserResume(companies) {
+  const allUsers=getAllUsersFromCompanies(companies);
+  const userResume={
+    size: 0,
+    average: 0,
+    hasCar: 0,
+    averageWithCar: 0,
+  };
+
+  allUsers.forEach((user) => {
+    userResume.size++;
+    userResume.average+=user.age;
+    if (user.car) {
+      userResume.hasCar++;
+      userResume.averageWithCar+=user.age;
+    }
+  });
+
+  userResume.average=(userResume.size>0)?userResume.average/userResume.size:0;
+  userResume.averageWithCar=(userResume.hasCar>0)?userResume.averageWithCar/userResume.hasCar:0;
+
+  return userResume;
+}
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
