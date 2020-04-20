@@ -2,7 +2,48 @@ import {createAll, cleanConsole} from './data';
 const companies = createAll();
 
 cleanConsole(1, companies);
-console.log('---- EXAMPLE 1 --- ', 'Put here your function');
+console.log('---- EXAMPLE 1 --- ', transformCompanies(companies));
+
+function transformCompanies(companies) {
+  companies=companies.map(function(company) {
+    company.users=company.users.map(function(user) {
+      user.firstName=capitalize(user.firstName);
+      user.lastName=capitalize(user.lastName);
+      return user;
+    });
+    sortUsersByName(company.users);
+    company.name=capitalize(company.name);
+    return company;
+  });
+
+  sortCompaniesByNumberUsers(companies);
+
+  return companies;
+}
+
+function sortUsersByName(users) {
+  users.sort(function(a, b) {
+    if (a.firstName>b.firstName) return 1;
+    if (a.firstName<b.firstName) return -1;
+    if (a.lastName>b.lastName) return 1;
+    if (a.lastName<b.lastName) return -1;
+    return 0;
+  });
+}
+
+function sortCompaniesByNumberUsers(companies) {
+  companies.sort(function(compnay1, company2) {
+    if (compnay1.users.length>company2.users.length) return 1;
+    if (compnay1.users.length<company2.users.length) return -1;
+    return 0;
+  });
+  return companies;
+}
+
+function capitalize(word) {
+  if (word==undefined) return '';
+  return word[0].toUpperCase()+word.slice(1);
+}
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
