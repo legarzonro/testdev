@@ -2,7 +2,7 @@ import {cleanConsole, createAll, clone} from './data';
 const companies = createAll();
 
 cleanConsole(2, companies);
-console.log('---- EXAMPLE 2 --- ', filterCompanyUserByCarValue(companies, false));
+console.log('---- EXAMPLE 2 --- ', filterCompanyUserByCarValue(companies, true));
 
 function filterCompanyUserByCarValue(companies, hasCar) {
   let newCompanies=clone(companies);

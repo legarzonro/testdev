@@ -1,9 +1,20 @@
 import {cleanConsole, createAll} from './data';
-
+import {getAllUsersFromCompanies} from './example-4';
 const companies = createAll();
 
 cleanConsole(6, companies);
-console.log('---- EXAMPLE 6 --- ', 'Put here your function');
+console.log('---- EXAMPLE 6 --- ', getUsersObject(companies));
+
+function getUsersObject(companies) {
+  const allUsers=getAllUsersFromCompanies(companies);
+  const usersObject={};
+
+  allUsers.forEach((user) => {
+    usersObject[user.firstName+user.lastName+user.age]=user.car;
+  });
+  
+  return usersObject;
+}
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
