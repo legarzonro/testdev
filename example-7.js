@@ -3,8 +3,8 @@ import {cleanConsole, createAll} from './data';
 const companies = createAll();
 
 cleanConsole(7, companies);
-console.log('---- EXAMPLE 7 part 1 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 2 --- ', 'Put here your function');
+console.log('---- EXAMPLE 7 part 1 --- ', getCompanyById(companies, 1));
+console.log('---- EXAMPLE 7 part 2 --- ', deleteCompanyById(companies, 1));
 console.log('---- EXAMPLE 7 part 3 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 4 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 5 --- ', 'Put here your function');
@@ -12,6 +12,21 @@ console.log('---- EXAMPLE 7 part 6 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 7 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 8 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 9 --- ', 'Put here your function');
+
+function getCompanyById(companies, id) {
+  const index= companies.findIndex((comapny)=>comapny.id==id);
+  if (index!=-1) {
+    return companies[index].name;
+  }
+}
+
+function deleteCompanyById(companies, id) {
+  const index= companies.findIndex((comapny)=>comapny.id==id);
+  if (index!=-1) {
+    companies.splice(index, 1);
+    return companies;
+  }
+}
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL

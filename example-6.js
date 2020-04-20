@@ -12,7 +12,7 @@ function getUsersObject(companies) {
   allUsers.forEach((user) => {
     usersObject[user.firstName+user.lastName+user.age]=user.car;
   });
-  
+
   return usersObject;
 }
 
