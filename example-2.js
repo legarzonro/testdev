@@ -2,7 +2,16 @@ import {cleanConsole, createAll} from './data';
 const companies = createAll();
 
 cleanConsole(2, companies);
-console.log('---- EXAMPLE 2 --- ', 'Put here your function');
+console.log('---- EXAMPLE 2 --- ', filterCompanyUserByCarValue(companies, false));
+
+function filterCompanyUserByCarValue(companies, hasCar) {
+  companies=companies.map(function(company) {
+    company.users=company.users.filter((user)=>user.car==hasCar);
+    company.usersLength=company.users.length;
+    return company;
+  });
+  return companies;
+}
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
