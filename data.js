@@ -79,7 +79,7 @@ export function createAll() {
   return companies;
 }
 
-function clone(value) {
+export function clone(value) {
   return Object.keys(value).map((key) => {
     value[key].users = value[key].users.map((user) => ({...user}));
     value[key] = {...value[key]};

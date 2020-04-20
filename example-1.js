@@ -1,11 +1,12 @@
-import {createAll, cleanConsole} from './data';
+import {createAll, cleanConsole, clone} from './data';
 const companies = createAll();
 
 cleanConsole(1, companies);
 console.log('---- EXAMPLE 1 --- ', transformCompanies(companies));
 
 function transformCompanies(companies) {
-  companies=companies.map(function(company) {
+  let newCompanies=clone(companies);
+  newCompanies=newCompanies.map(function(company) {
     company.users=company.users.map(function(user) {
       user.firstName=capitalize(user.firstName);
       user.lastName=capitalize(user.lastName);
@@ -16,9 +17,9 @@ function transformCompanies(companies) {
     return company;
   });
 
-  sortCompaniesByNumberUsers(companies);
+  sortCompaniesByNumberUsers(newCompanies);
 
-  return companies;
+  return newCompanies;
 }
 
 function sortUsersByName(users) {
