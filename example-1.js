@@ -33,8 +33,8 @@ function sortUsersByName(users) {
 
 function sortCompaniesByNumberUsers(companies) {
   companies.sort(function(compnay1, company2) {
-    if (compnay1.users.length>company2.users.length) return 1;
-    if (compnay1.users.length<company2.users.length) return -1;
+    if (compnay1.users.length>company2.users.length) return -1;
+    if (compnay1.users.length<company2.users.length) return 1;
     return 0;
   });
   return companies;
