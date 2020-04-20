@@ -1,16 +1,17 @@
-import {cleanConsole, createAll} from './data';
+import {cleanConsole, createAll, clone} from './data';
 const companies = createAll();
 
 cleanConsole(2, companies);
 console.log('---- EXAMPLE 2 --- ', filterCompanyUserByCarValue(companies, false));
 
 function filterCompanyUserByCarValue(companies, hasCar) {
-  companies=companies.map(function(company) {
+  let newCompanies=clone(companies);
+  newCompanies=newCompanies.map(function(company) {
     company.users=company.users.filter((user)=>user.car==hasCar);
     company.usersLength=company.users.length;
     return company;
   });
-  return companies;
+  return newCompanies;
 }
 
 // -----------------------------------------------------------------------------
