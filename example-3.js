@@ -3,7 +3,33 @@ import {cleanConsole, createAll} from './data';
 const companies = createAll();
 
 cleanConsole(3, companies);
-console.log('---- EXAMPLE 3 --- ', 'Put here your function');
+console.log('---- EXAMPLE 3 --- ', companyAndUserNamesAreCapitalized(companies));
+
+function companyAndUserNamesAreCapitalized(companies) {
+  for (let i = 0; i < companies.length; i++) {
+    const company = companies[i];
+    if (company.name[0]!=''
+      && company.name[0]!=undefined
+      && company.name[0].toLowerCase()==company.name[0]) {
+      return false;
+    }
+
+    for (let j = 0; j < company.users.length; j++) {
+      const user = company.users[j];
+      if (user.firstName[0]!=''
+        && user.firstName[0]!=undefined
+        && user.firstName[0].toLowerCase()==user.firstName[0]) {
+        return false;
+      }
+      if (user.lastName[0]!=''
+        && user.lastName[0]!=undefined
+        && user.lastName[0].toLowerCase()==user.lastName[0]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
