@@ -1,26 +1,32 @@
 import {cleanConsole, createAll} from './data';
 
 const companies = createAll();
+const user = {age: 35, car: true, firstName: 'Juan', lastName: 'Delgado'};
+const comapny ={id: 88,
+  isOpen: false,
+  name: 'Microsoft',
+  users: null,
+  usersLength: 7};
 
 cleanConsole(7, companies);
-console.log('---- EXAMPLE 7 part 1 --- ', getCompanyById(companies, 1));
-console.log('---- EXAMPLE 7 part 2 --- ', deleteCompanyById(companies, 1));
-console.log('---- EXAMPLE 7 part 3 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 4 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 5 --- ', 'Put here your function');
+console.log('---- EXAMPLE 7 part 1 --- ', getCompanyById(1));
+console.log('---- EXAMPLE 7 part 2 --- ', deleteCompanyById(1));
+console.log('---- EXAMPLE 7 part 3 --- ', patchCompanyValue(0, {name: 'IBM', users: null, isOpen: true}));
+console.log('---- EXAMPLE 7 part 4 --- ', addUserByComapnyId(0, user));
+console.log('---- EXAMPLE 7 part 5 --- ', putCompanyValue(0, comapny));
 console.log('---- EXAMPLE 7 part 6 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 7 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 8 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 9 --- ', 'Put here your function');
 
-function getCompanyById(companies, id) {
+function getCompanyById(id) {
   const index= companies.findIndex((comapny)=>comapny.id==id);
   if (index!=-1) {
     return companies[index].name;
   }
 }
 
-function deleteCompanyById(companies, id) {
+function deleteCompanyById(id) {
   const index= companies.findIndex((comapny)=>comapny.id==id);
   if (index!=-1) {
     companies.splice(index, 1);
@@ -28,6 +34,42 @@ function deleteCompanyById(companies, id) {
   }
 }
 
+function patchCompanyValue(id, newValue) {
+  const index= companies.findIndex((comapny)=>comapny.id==id);
+  if (index!=-1) {
+    for (const key in companies[index]) {
+      if (newValue.hasOwnProperty(key) && key!='users') {
+        companies[index][key]=newValue[key];
+      }
+    }
+    return companies[index];
+  }
+  return null;
+}
+
+function addUserByComapnyId(id, newUser) {
+  const index= companies.findIndex((comapny)=>comapny.id==id);
+  if (index!=-1) {
+    newUser.id=companies[index].usersLength;
+    companies[index].users.push(newUser);
+    companies[index].usersLength++;
+    return companies[index].users;
+  }
+  return null;
+}
+
+function putCompanyValue(id, newValue) {
+  const index= companies.findIndex((comapny)=>comapny.id==id);
+  if (index!=-1) {
+    newValue.users=companies[index].users;
+    for (const key in companies[index]) {
+      if (!newValue.hasOwnProperty(key)) return companies[index];
+    }
+    companies[index]=newValue;
+    return companies[index];
+  }
+  return null;
+}
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
 
