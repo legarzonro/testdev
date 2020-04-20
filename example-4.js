@@ -2,7 +2,32 @@ import {cleanConsole, createAll} from './data';
 const companies = createAll();
 
 cleanConsole(4, companies);
-console.log('---- EXAMPLE 4 --- ', 'Put here your function');
+console.log('---- EXAMPLE 4 --- ', getAllUsersFromCompanies(companies));
+
+function getAllUsersFromCompanies(companies) {
+  const allUsers=[];
+  for (let i = 0; i < companies.length; i++) {
+    const company = companies[i];
+    console.log(company.users);
+    const user = company.users.map(function(user) {
+      user.company=company.name;
+      return user;
+    });
+
+    allUsers.push(...user);
+  }
+  return sortUsersByAge(allUsers);
+}
+
+function sortUsersByAge(users) {
+  users.sort(function(user1, user2) {
+    if (user1.age>user2.age) return -1;
+    if (user1.age<user2.age) return 1;
+    return 0;
+  });
+  return users;
+}
+
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
