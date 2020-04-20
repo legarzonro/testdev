@@ -2,32 +2,39 @@ import {cleanConsole, createAll} from './data';
 
 const companies = createAll();
 const user = {age: 35, car: true, firstName: 'Juan', lastName: 'Delgado'};
-const comapny ={id: 88,
+const company = {id: 88,
   isOpen: false,
   name: 'Microsoft',
   users: null,
   usersLength: 7};
+const putUser= {
+  age: 119,
+  car: true,
+  company: 'net-consult',
+  firstName: 'Leonardo',
+  id: 2,
+  lastName: 'Garzon'};
 
 cleanConsole(7, companies);
 console.log('---- EXAMPLE 7 part 1 --- ', getCompanyById(1));
 console.log('---- EXAMPLE 7 part 2 --- ', deleteCompanyById(1));
 console.log('---- EXAMPLE 7 part 3 --- ', patchCompanyValue(0, {name: 'IBM', users: null, isOpen: true}));
 console.log('---- EXAMPLE 7 part 4 --- ', addUserByComapnyId(0, user));
-console.log('---- EXAMPLE 7 part 5 --- ', putCompanyValue(0, comapny));
-console.log('---- EXAMPLE 7 part 6 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 7 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 8 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 9 --- ', 'Put here your function');
+console.log('---- EXAMPLE 7 part 5 --- ', putCompanyValue(0, company));
+console.log('---- EXAMPLE 7 part 6 --- ', removeUserByComapnyIdAndUserId(88, 1));
+console.log('---- EXAMPLE 7 part 7 --- ', patchUserValueFromComapny(88, 2, {firstName: 'Leonardo'}));
+console.log('---- EXAMPLE 7 part 8 --- ', putUserValueFromComapny(88, 2, putUser));
+console.log('---- EXAMPLE 7 part 9 --- ', moveUserFromCompany(2, 88, 2));
 
 function getCompanyById(id) {
-  const index= companies.findIndex((comapny)=>comapny.id==id);
+  const index= companies.findIndex((company)=>company.id==id);
   if (index!=-1) {
     return companies[index].name;
   }
 }
 
 function deleteCompanyById(id) {
-  const index= companies.findIndex((comapny)=>comapny.id==id);
+  const index= companies.findIndex((company)=>company.id==id);
   if (index!=-1) {
     companies.splice(index, 1);
     return companies;
@@ -35,7 +42,7 @@ function deleteCompanyById(id) {
 }
 
 function patchCompanyValue(id, newValue) {
-  const index= companies.findIndex((comapny)=>comapny.id==id);
+  const index= companies.findIndex((company)=>company.id==id);
   if (index!=-1) {
     for (const key in companies[index]) {
       if (newValue.hasOwnProperty(key) && key!='users') {
@@ -48,7 +55,7 @@ function patchCompanyValue(id, newValue) {
 }
 
 function addUserByComapnyId(id, newUser) {
-  const index= companies.findIndex((comapny)=>comapny.id==id);
+  const index= companies.findIndex((company)=>company.id==id);
   if (index!=-1) {
     newUser.id=companies[index].usersLength;
     companies[index].users.push(newUser);
@@ -59,7 +66,7 @@ function addUserByComapnyId(id, newUser) {
 }
 
 function putCompanyValue(id, newValue) {
-  const index= companies.findIndex((comapny)=>comapny.id==id);
+  const index= companies.findIndex((company)=>company.id==id);
   if (index!=-1) {
     newValue.users=companies[index].users;
     for (const key in companies[index]) {
@@ -67,6 +74,66 @@ function putCompanyValue(id, newValue) {
     }
     companies[index]=newValue;
     return companies[index];
+  }
+  return null;
+}
+
+function removeUserByComapnyIdAndUserId(comapnyId, userId) {
+  const companyIndex= companies.findIndex((company)=>company.id==comapnyId);
+  if (companyIndex!=-1) {
+    const userIndex= companies[companyIndex].users.findIndex((user)=>user.id==userId);
+    if (userIndex!=-1) {
+      companies[companyIndex].users.splice(userIndex, 1);
+      companies[companyIndex].usersLength--;
+      return companies[companyIndex].users;
+    }
+  }
+  return null;
+}
+
+function patchUserValueFromComapny(comapnyId, userId, newUser) {
+  const companyIndex= companies.findIndex((company)=>company.id==comapnyId);
+  if (companyIndex!=-1) {
+    const userIndex= companies[companyIndex].users.findIndex((user)=>user.id==userId);
+    if (userIndex!=-1) {
+      for (const key in companies[companyIndex].users[userIndex]) {
+        if (newUser.hasOwnProperty(key)) {
+          companies[companyIndex].users[userIndex][key]=newUser[key];
+        }
+      }
+      return companies[companyIndex].users[userIndex];
+    }
+  }
+  return null;
+}
+
+function putUserValueFromComapny(comapnyId, userId, newUser) {
+  const companyIndex= companies.findIndex((company)=>company.id==comapnyId);
+  if (companyIndex!=-1) {
+    const userIndex= companies[companyIndex].users.findIndex((user)=>user.id==userId);
+    if (userIndex!=-1) {
+      for (const key in companies[companyIndex].users[userIndex]) {
+        if (!newUser.hasOwnProperty(key)) return companies[companyIndex].users[userIndex];
+      }
+      companies[companyIndex].users[userIndex]=newUser;
+      return companies[companyIndex].users[userIndex];
+    }
+  }
+  return null;
+}
+
+function moveUserFromCompany(userId, fromCompanyId, toComapnyId) {
+  const fromCompanyIndex= companies.findIndex((company)=>company.id==fromCompanyId);
+  const toCompanyIndex= companies.findIndex((company)=>company.id==toComapnyId);
+  if (fromCompanyIndex!=-1 && toCompanyIndex!=-1) {
+    const userIndex= companies[fromCompanyIndex].users.findIndex((user)=>user.id==userId);
+    if (userIndex!=-1) {
+      const userToTransfer=companies[fromCompanyIndex].users.splice(userIndex, 1);
+      companies[fromCompanyIndex].usersLength--;
+      companies[toCompanyIndex].users.push(userToTransfer);
+      companies[toCompanyIndex].usersLength++;
+      return userToTransfer;
+    }
   }
   return null;
 }
